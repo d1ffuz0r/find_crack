@@ -23,6 +23,9 @@ class FindCrack(object):
 		for j in re.findall(r'(<a target=_blank href="\./redir.php\?(.*?)">(.*?)</a>\s::\s(.*?)\s::\s(.*?)<br>)',html):
 			res = list(j)
 			self.result.append(dict(url=res[1],name=res[2], size=res[3], date=res[4]))
-		
+'''		
+example use this class
 find = FindCrack()
-find.search('',10)
+for cr in find.search('decompiler',10):
+	print cr
+'''
