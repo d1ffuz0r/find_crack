@@ -5,21 +5,35 @@ import re
 
 class FindCrack(object):
 	'''
-	search cracks on http://mskd-ru.net,www.crackserialkeygen.com
+	search cracks on mskd-ru.net,www.crackserialkeygen.com,andr.net,keygens.nl
 	'''
 	def __init__(self):
 		self.result = []
 		self.__all__ = [
 					{
 						'url':'http://mskd-ru.net/apteka.php?crack=%s',
+						'prefix':'',
 						'regexp':r'<a target=_blank\shref="\./redir.php\?(.*?)"\s(.*?)>(.*?)</a>\s::(.*?)\s::\s(.*?)<br>',
-						'rows':[0, 2]
+						'rows':[0, 2],
 					},
 					{
 						'url':'http://www.crackserialkeygen.com/%s-crack-serial-keygen.html',
+						'prefix':'http://www.crackserialkeygen.com',
 						'regexp':r'<div class="result"><a class="slink" href="(.*?)">(.*?)</a>',
+						'rows':[0, 1],
+					},
+					{
+						'url':'http://andr.net/search.php?stype=andrnet&str=%s',
+						'prefix':'http://andr.net/d.php?c=',
+						'regexp':r'<td width="520">(.*?)<a href="javascript:(c2|c)\((\d+)\)" >\s(.*?)</a><br></td>',
+						'rows':[2, 3],
+					},
+					{
+						'url':'http://keygens.nl/cracked_warez_search.php?s=%s',
+						'prefix':'http://keygens.nl',
+						'regexp':r'<a href="(.*?/crack/.*?)">(.*?)</a><br>',
 						'rows':[0, 1]
-					}
+					},
 				]
 		
 	def search(self, name, count=1000):
@@ -33,11 +47,10 @@ class FindCrack(object):
 	def _parse(self, data, name):
 		page = urllib2.urlopen(data['url'] % name).read()
 		for res in re.findall(data['regexp'], page, re.I):
-			self.result.append(dict(url=res[data['rows'][0]], name=res[data['rows'][1]]))
-
+			self.result.append(dict(url=data['prefix'] + res[data['rows'][0]], name=res[data['rows'][1]]))
 '''
 example
 find = FindCrack()
-for j in find.search('decompiler', 10):
+for j in find.search('decompiler'):
 	print j
 '''
