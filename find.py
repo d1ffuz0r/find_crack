@@ -34,6 +34,12 @@ class FindCrack(object):
 						'regexp':r'<a href="(.*?/crack/.*?)">(.*?)</a><br>',
 						'rows':[0, 1]
 					},
+					{
+						'url':'http://www.supercracks.net/search.php?crack=%s',
+						'prefix':'http://www.supercracks.net/v.php?id=',
+						'regexp':r'<a href="javascript:download\((\d+)\);">(.*?)</a><br>',
+						'rows':[0, 1]
+					},
 				]
 		
 	def search(self, name, count=1000):
