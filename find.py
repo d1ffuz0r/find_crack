@@ -5,7 +5,7 @@ import re
 
 class FindCrack(object):
 	'''
-	search cracks on mskd-ru.net,www.crackserialkeygen.com,andr.net,keygens.nl
+	search cracks on mskd-ru.net,www.crackserialkeygen.com,andr.net,keygens.nl,www.supercracks.net
 	'''
 	def __init__(self):
 		self.result = []
@@ -54,9 +54,13 @@ class FindCrack(object):
 		page = urllib2.urlopen(data['url'] % name).read()
 		for res in re.findall(data['regexp'], page, re.I):
 			self.result.append(dict(url=data['prefix'] + res[data['rows'][0]], name=res[data['rows'][1]]))
+
 '''
-example
+@see example for use
 find = FindCrack()
-for j in find.search('decompiler'):
+for j in find.search('decompiler',10):
 	print j
-'''
+------------
+@todo append caching results
+------------
+''''
