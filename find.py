@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
-import urllib2
-import re
+from urllib2 import urlopen
+from re import findall, I
 
 class FindCrack(object):
 	'''
@@ -51,10 +51,12 @@ class FindCrack(object):
 		return self.result[:int(count)]
 		
 	def _parse(self, data, name):
-		page = urllib2.urlopen(data['url'] % name).read()
-		for res in re.findall(data['regexp'], page, re.I):
+		page = urlopen(data['url'] % name).read()
+		for res in findall(data['regexp'], page, I):
 			self.result.append(dict(url=data['prefix'] + res[data['rows'][0]], name=res[data['rows'][1]]))
-
+	
+	def clear(self):
+		self.result = []
 '''
 @see example for use
 find = FindCrack()
@@ -63,4 +65,4 @@ for j in find.search('decompiler',10):
 ------------
 @todo append caching results
 ------------
-''''
+'''
