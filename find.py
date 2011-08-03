@@ -57,10 +57,11 @@ class FindCrack(object):
 	
 	def clear(self):
 		self.result = []
+
 '''
 @see example for use
 find = FindCrack()
-for j in find.search('decompiler',10):
+for j in find.search('Sothink_SWF_Decompiler'):
 	print j
 ------------
 @todo append caching results
